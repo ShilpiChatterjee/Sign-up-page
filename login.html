@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup</title>
+    <link rel="stylesheet" href="login.css"/>
+</head>
+<body>
+    <div id="login-container">
+        <h1>Login</h1>
+        <form id="loginform">
+            <label>Email:</label>
+            <input type="text" placeholder="Enter Email" id="email" required><br>
+            <label>Password</label>
+            <input type="password" placeholder="Enter Password" id="password" required><br>
+            <input type="submit" id="submit" />
+            <div>Don't have account?<a href="signup.html">Sign-up</a> to create account</div>
+        </form>
+        <p id="error-message"></p>
+    </div>
+    <script>
+        var SignArr = JSON.parse(localStorage.getItem("Signup")) || [];
+    
+        document.querySelector("#loginform").addEventListener("submit", validateLogin);
+    
+        function validateLogin(event) {
+            event.preventDefault();
+            var enteredEmail = document.getElementById("email").value;
+            var enteredPassword = document.getElementById("password").value;
+    
+            var isLoginSuccessful = false;
+    
+        
+            for (var i = 0; i < SignArr.length; i++) {
+                var user = SignArr[i];
+                if (user.personemail === enteredEmail && user.personpass === enteredPassword) {
+                    
+                    isLoginSuccessful = true;
+                    break;
+                }
+            }
+    
+            if (isLoginSuccessful) {
+                
+                document.getElementById("error-message").textContent = "";
+                alert("Login successful!");
+                window.location.href= "newpage.html";
+            } else {
+            
+                document.getElementById("error-message").textContent = "Invalid email or password. Please try again.";
+                console.log("Invalid login attempt");
+            }
+        }
+    </script>
+    
+</body>
+</html>
